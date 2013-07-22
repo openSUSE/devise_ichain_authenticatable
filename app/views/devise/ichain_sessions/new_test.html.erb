@@ -1,0 +1,12 @@
+<h2>Sign in (TEST MODE)</h2>
+
+<%= form_tag(@login_url, :method => :post, :enctype => 'application/x-www-form-urlencoded') do %>
+  <div><%= label_tag :username, "Username" %><br />
+  <%= text_field_tag :username, "" %></div>
+  <%- @fields.each do |field| %>
+    <div><%= label_tag "attributes[#{field}]",  field.to_s.humanize %><br />
+    <%= text_field_tag "attributes[#{field}]", "" %></div>
+  <%- end -%>
+
+  <div><%= submit_tag "Sign in" %></div>
+<% end %>
