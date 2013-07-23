@@ -1,0 +1,8 @@
+en:
+  devise:
+    ichain_registrations:
+      in_test_mode: "No registration available since ichain_test_mode is enabled."
+      updated: "You updated your account successfully."
+      update_failed: "Some error prevented your account to be updated."
+    ichain_sessions:
+      signed_out: "Signed out successfully."

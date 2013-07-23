@@ -5,7 +5,7 @@ class Devise::IchainRegistrationsController < DeviseController
   def new
     redirect_url = base_url + after_sign_up_path_for(resource_name)
     if ::Devise.ichain_test_mode
-      set_flash_message :notice, :in_test_mode
+      set_flash_message :alert, :in_test_mode
       redirect_to redirect_url
     else
       sign_up_url = ::Devise.ichain_base_url + "/ICSLogin"
@@ -20,11 +20,12 @@ class Devise::IchainRegistrationsController < DeviseController
   end
 
   # PUT /resource
-  # We need to use a copy of the resource because we don't want to change
-  # the current user in place.
   def update
-    #self.resource = resource_class.to_adapter.get!(send(:"current_#{resource_name}").to_key)
-    resource.update_attributes(resource_params)
+    if resource.update_attributes(resource_params)
+      set_flash_message :notice, :updated
+    else
+      set_flash_message :alert, :update_failed
+    end
     respond_with resource, :location => after_update_path_for(resource)
   end
 
