@@ -6,7 +6,8 @@ class Devise::IchainSessionsController < DeviseController
     return new_test if ::Devise.ichain_test_mode
     self.resource = build_resource(nil, :unsafe => true)
     @back_url = base_url + after_sign_in_path_for(resource_name)
-    @login_url = (::Devise.ichain_base_url || "") + "/ICSLogin/auth-up"
+    # The slash at the end is very important
+    @login_url = (::Devise.ichain_base_url || "") + "/ICSLogin/auth-up/"
     @context = ::Devise.ichain_context
     @proxypath = ::Devise.ichain_proxypath
     respond_with resource
@@ -22,7 +23,8 @@ class Devise::IchainSessionsController < DeviseController
       set_flash_message :notice, :signed_out if signed_out && is_navigational_format?
       redirect_to redirect_url
     else
-      logout_url = ::Devise.ichain_base_url + "/ICHAINLogout"
+      # The final slash is very important, indeed
+      logout_url = ::Devise.ichain_base_url + "/ICHAINLogout/"
       logout_url += "?" + {:url => redirect_url}.to_query
       redirect_to logout_url
     end
