@@ -8,8 +8,7 @@ class Devise::IchainRegistrationsController < DeviseController
       set_flash_message :alert, :in_test_mode
       redirect_to redirect_url
     else
-      # The last slash is very important, indeed
-      sign_up_url = ::Devise.ichain_base_url + "/ICSLogin/"
+      sign_up_url = resource_class.ichain_registration_url
       sign_up_url += "?" + {:url => redirect_url}.to_query
       redirect_to sign_up_url
     end

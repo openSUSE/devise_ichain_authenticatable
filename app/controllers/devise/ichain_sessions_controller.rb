@@ -7,7 +7,7 @@ class Devise::IchainSessionsController < DeviseController
     self.resource = build_resource(nil, :unsafe => true)
     @back_url = base_url + after_sign_in_path_for(resource_name)
     # The slash at the end is very important
-    @login_url = (::Devise.ichain_base_url || "") + "/ICSLogin/auth-up/"
+    @login_url = resource_class.ichain_login_url
     @context = ::Devise.ichain_context
     @proxypath = ::Devise.ichain_proxypath
     respond_with resource
@@ -24,7 +24,7 @@ class Devise::IchainSessionsController < DeviseController
       redirect_to redirect_url
     else
       # The final slash is very important, indeed
-      logout_url = ::Devise.ichain_base_url + "/ICHAINLogout/"
+      logout_url = resource_class.ichain_logout_url
       logout_url += "?" + {:url => redirect_url}.to_query
       redirect_to logout_url
     end
