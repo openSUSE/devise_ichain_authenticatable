@@ -60,7 +60,7 @@ Finally, you'll need to add some configuration to your
 `config/initializers/devise.rb` in order to tell your app how to talk
 to your iChain proxy.
 
-```
+```ruby
 Devise.setup do |config|
  ...
  # You will always need to set this parameter.
