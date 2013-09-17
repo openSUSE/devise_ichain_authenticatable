@@ -11,12 +11,12 @@ desired.
 Requirements
 ------------
 
-The plugin should be compatible with Ruby 1.8.7, 1.9.3 and 2.0, but have only be
-tested in production with Ruby 1.9.3.
+The plugin should be compatible with Ruby 1.8.7, 1.9 and 2.0 (tested with
+1.9.3 and 2.0.0).
 
 In the same way, it should work with any version of Devise equal or greater than 2.2
-and with any version of Rails equal or greater than 3.2, but have only be tested
-with Rails 3.2 and Devise 2.2.
+and with any version of Rails equal or greater than 3.2 (tested with Devise 2.2
+on Rails 3.2 and with Devise 3.1 on Rails 4).
 
 Reporting of success stories with other setups would be highly appreciated.
 
@@ -39,7 +39,11 @@ class User < ActiveRecord::Base
   devise :ichain_authenticatable, :ichain_registerable
 
   def self.for_ichain_username(username, attributes)
-    find_or_create_by_login(username)
+    if user = find_by(login: username)
+      user.update_column(email: attributes[:email]) if user.email != attributes[:email]
+    else
+      user = create(login: username, email: attributes[:email])
+    end
   end
 end
 ```
@@ -65,6 +69,11 @@ Devise.setup do |config|
  ...
  # You will always need to set this parameter.
  config.ichain_base_url = "https://my.application.org"
+
+ # Paths (relative to ichain_base_url) used by your proxy
+ # config.ichain_login_path = "ICSLogin/"
+ # config.ichain_registration_path = "ICSLogin/auth-up/"
+ # config.ichain_logout_path = "cmd/ICSLogout/"
 
  # The header used by your iChain proxy to pass the username.
  # config.ichain_username_header = "HTTP_X_USERNAME"
