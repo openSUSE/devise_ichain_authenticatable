@@ -6,18 +6,21 @@ module Devise
       end
 
       module ClassMethods
-        # The slashes at the end of the urls looks to be relevant
+        def ichain_url_for(action)
+          URI::join(::Devise.ichain_base_url || "",
+                    ::Devise.send(:"ichain_#{action}_path")).to_s
+        end
 
         def ichain_registration_url
-          (::Devise.ichain_base_url || "") + "/ICSLogin/"
+          ichain_url_for(:registration)
         end
 
         def ichain_login_url
-          (::Devise.ichain_base_url || "") + "/ICSLogin/auth-up/"
+          ichain_url_for(:login)
         end
 
         def ichain_logout_url
-          (::Devise.ichain_base_url || "") + "/ICHAINLogout/"
+          ichain_url_for(:logout)
         end
       end
 
