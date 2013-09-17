@@ -4,7 +4,7 @@ class Devise::IchainSessionsController < DeviseController
   # GET /resource/sign_in
   def new
     return new_test if ::Devise.ichain_test_mode
-    self.resource = build_resource(nil, :unsafe => true)
+    self.resource = resource_class.new
     @back_url = base_url + after_sign_in_path_for(resource_name)
     # The slash at the end is very important
     @login_url = resource_class.ichain_login_url
@@ -40,7 +40,7 @@ class Devise::IchainSessionsController < DeviseController
   protected
 
   def new_test
-    self.resource = build_resource(nil, :unsafe => true)
+    self.resource = resource_class.new
     @fields = (::Devise.ichain_attribute_headers.keys rescue [])
     @login_url = test_ichain_session_path(resource_name)
     render :new_test
