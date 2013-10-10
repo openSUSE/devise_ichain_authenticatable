@@ -90,6 +90,8 @@ Devise.setup do |config|
  # Activate the test mode, useful when no real iChain is present, like in
  # testing and development environments
  # config.ichain_test_mode = false
+ # config.ichain_force_test_username = "testuser"
+ # config.ichain_force_test_attributes = {:email => "testuser@example.com"}
 end
 ```
 
@@ -108,7 +110,8 @@ If the test mode is enabled in the configuration file, anytime
 authentication is required, a very simple form asking for the username and the
 additional parameters will be displayed. The entered values will be completely
 trusted with no check. ```ichain_registerable```will have no effect if test mode
-is enabled.
+is enabled. THIS IS NOT EXACTLY TRUE RIGHT NOW. I WILL DOCUMENT IT WHEN THE NEW
+FEATURES FOR TESTMODE ARE TESTED.
 
 This mode is extremely useful during the development phase, in which an iChain
 proxy is not usually configured or even available.

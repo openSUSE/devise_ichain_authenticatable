@@ -11,9 +11,16 @@ class Devise::Strategies::IchainAuthenticatable < Devise::Strategies::Authentica
   end
 
   def authenticate!
+    proxy_user = nil
     if ::Devise.ichain_test_mode
-      unless session[:ichain_test_username].blank?
+      if ::Devise.ichain_force_test_username
+        proxy_user = ::Devise.ichain_force_test_username.to_s
+      elsif session[:ichain_test_username]
         proxy_user = session[:ichain_test_username]
+      end
+      if ::Devise.ichain_force_test_attributes
+        attributes = ::Devise.ichain_force_test_attributes
+      else
         attributes = session[:ichain_test_attributes] || {}
       end
     else
