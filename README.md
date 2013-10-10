@@ -90,7 +90,12 @@ Devise.setup do |config|
  # Activate the test mode, useful when no real iChain is present, like in
  # testing and development environments
  # config.ichain_test_mode = false
+
+ # In test mode, you can skip asking for the user information by always
+ # forcing the following username. The user will be permanently signed in.
  # config.ichain_force_test_username = "testuser"
+
+ # In test mode, force the following additional attributes
  # config.ichain_force_test_attributes = {:email => "testuser@example.com"}
 end
 ```
@@ -106,15 +111,24 @@ the following helpers would be available: `new_user_ichain_session_path`,
 Test mode
 ---------
 
-If the test mode is enabled in the configuration file, anytime
+This gem provides a test mode, extremely useful during the development
+phase, in which an iChain proxy is not usually configured or even available.
+```ichain_registerable```will have no effect if test mode is enabled.
+
+By default, if the test mode is enabled in the configuration file, anytime
 authentication is required, a very simple form asking for the username and the
 additional parameters will be displayed. The entered values will be completely
-trusted with no check. ```ichain_registerable```will have no effect if test mode
-is enabled. THIS IS NOT EXACTLY TRUE RIGHT NOW. I WILL DOCUMENT IT WHEN THE NEW
-FEATURES FOR TESTMODE ARE TESTED.
+trusted with no check and stored in the Rails' session.
 
-This mode is extremely useful during the development phase, in which an iChain
-proxy is not usually configured or even available.
+In some situations this approach is not useful, either because the application
+lacks sessions' management and/or user interface (for example, applications
+based on [rails-api](https://github.com/rails-api/rails-api)), either because
+you simply want to skip asking for the test user information. In those
+cases, a username and/or a set of additional attributes can be forced using the
+```ichain_force_test_username``` and ```ichain_force_test_attributes```
+configuration options. If ```ichain_force_test_username``` is set, the username
+will be used in every single request, which means that the user will be
+permanently signed in.
 
 Contact
 -------
