@@ -39,10 +39,10 @@ class User < ActiveRecord::Base
   devise :ichain_authenticatable, :ichain_registerable
 
   def self.for_ichain_username(username, attributes)
-    if user = find_by(login: username)
+    if (user = find_by(login: username))
       user.update_column(email: attributes[:email]) if user.email != attributes[:email]
     else
-      user = create(login: username, email: attributes[:email])
+      create(login: username, email: attributes[:email])
     end
   end
 end
