@@ -1,5 +1,5 @@
 class Devise::IchainSessionsController < DeviseController
-  prepend_before_filter :require_no_authentication, :only => [ :new, :test ]
+  prepend_before_action :require_no_authentication, :only => [ :new, :test ]
 
   def new
     return new_test if ::Devise.ichain_test_mode

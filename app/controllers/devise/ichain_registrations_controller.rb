@@ -1,6 +1,6 @@
 class Devise::IchainRegistrationsController < DeviseController
-  prepend_before_filter :require_no_authentication, :only => [ :new ]
-  prepend_before_filter :authenticate_scope!, :only => [:edit, :update]
+  prepend_before_action :require_no_authentication, :only => [ :new ]
+  prepend_before_action :authenticate_scope!, :only => [:edit, :update]
 
   def new
     redirect_url = base_url + after_sign_up_path_for(resource_name)
